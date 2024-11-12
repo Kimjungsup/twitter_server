@@ -1,6 +1,6 @@
 import express from 'express'  // 서버는 익스프레스
 import tweetsRouter from './router/tweets.js'  // 트윗라우터 불러오기
-import authRouter from './router/auth.js'
+import authRouter from './router/auth.js'  // 오쓰라우터 불러오기
 
 
 const app = express()  // 객체 만들기
