@@ -1,6 +1,6 @@
 // 회원 관리 (사용자 쪽)
 
-import exress from 'express'
+import express from 'express'
 
 const router = express.Router() // 라우터 기능할 것
 
