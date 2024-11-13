@@ -40,7 +40,12 @@ export async function createUser(username, password, name, email) {
     return user
 }
 
-export async function login(username) {
+// export async function login(username) {
+//     const user = users.find((user) => user.username === username)
+//     return user
+// }
+// 위 함수를 사람이 잇는지 없는지 확인하는거로 바꿈
+export async function findByUsername(username) {
     const user = users.find((user) => user.username === username)
     return user
 }
