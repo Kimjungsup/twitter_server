@@ -2,27 +2,21 @@
 let tweets = [
     {
         id:'1',
-        name:'김사과',
-        username:'apple',
+        userId: '1',
         text:'안녕하세요',
         createdAt: Date.now().toString(),
-        url: 'https://img.hankyung.com/photo/201904/ZA.19455953.1.jpg'
     },
     {
         id:'2',
-        name:'오렌지',
-        username:'orange',
+        userId: '2',
         text:'안녕하세오렌지',
         createdAt: Date.now().toString(),
-        url: 'https://images.squarespace-cdn.com/content/v1/66271db24df4cd422370803d/d5ea7fcd-6bf1-4f94-991b-b24d7574afaa/blog_2.png?format=1500w'
     },
     {
         id:'3',
-        name:'김포도',
-        username:'grape',
+        userId: '1',
         text:'안녕하세요포도',
         createdAt: Date.now().toString(),
-        url: 'https://images.squarespace-cdn.com/content/v1/66271db24df4cd422370803d/d5ea7fcd-6bf1-4f94-991b-b24d7574afaa/blog_2.png?format=1500w'
     }
 ]
 

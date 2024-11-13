@@ -4,7 +4,7 @@ let users = [
     {
         id:'1',
         username: 'apple',
-        password: '1111',
+        password: '$2b$10$Ahv4Kr0HpbU/6ktAEfNsEeAIkNIrInmLdboWcwDVGAGalKK45Q1rG', 
         name: '김사과',
         email: 'apple@apple.com',
         url:'https://library.ltikorea.or.kr/rest/content/thumbnail/14957?target=default&width=300&height=300'
@@ -30,8 +30,8 @@ let users = [
 export async function createUser(username, password, name, email) {
     const user ={
         id:'4',
-        username: username,
-        password: password,
+        username, // 자바스크립트에서 매개변수랑 인수랑 같게 놓을거면 하나로 써도 됨 (username, password 적용)
+        password,
         name: name,
         email: email,
         url:'https://menu.moneys.co.kr/moneyweek/thumb/2021/01/19/06/2021011909078097650_1.jpg/dims/optimize/'
@@ -44,8 +44,12 @@ export async function createUser(username, password, name, email) {
 //     const user = users.find((user) => user.username === username)
 //     return user
 // }
-// 위 함수를 사람이 잇는지 없는지 확인하는거로 바꿈
+// 위 함수를 사람이 있는지 없는지 확인하는거로 바꿈
 export async function findByUsername(username) {
     const user = users.find((user) => user.username === username)
     return user
+}
+
+export async function findById(id){
+    return users.find((user) => user.id === id)
 }
