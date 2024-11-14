@@ -1,16 +1,17 @@
 import * as authRepository from '../data/auth.js'
 import * as bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import { config } from '../config.js'
 
-// 시크릿 키 + 상수 + 만료일
-const secretkey = 'abcdefg1234%^&*' // 코드에 관리하면 안됨
-const bcryptSaltRounds = 10
-const jwtExpiresIndays = '2d'
+// config 만들어서 필요없어짐 (지우기) // 시크릿 키 + 상수 + 만료일  
+// const secretkey = 'abcdefg1234%^&*' // 코드에 관리하면 안됨
+// const bcryptSaltRounds = 10
+// const jwtExpiresIndays = '2d'
 
 // 토큰 만들어내는 함수
 async function createJwtToken(id) {
     return jwt.sign(
-        {id}, secretkey, {expiresIn: jwtExpiresIndays})
+        {id}, config.jwt.secretKey, {expiresIn: config.jwt.expiresInSec})
 }
 
 // signup
@@ -23,7 +24,7 @@ export async function signup(req, res, next) {
     }
 
     // const users = await authRepository.createUser(username, password, name, email)
-    const hashed = bcrypt.hashSync(password, bcryptSaltRounds)  // bcryptSaltRounds 보안상 따로 뺌 10값
+    const hashed = bcrypt.hashSync(password, config.bcrypt.saltRounds)  // bcryptSaltRounds 보안상 따로 뺌 10값
     const users = await authRepository.createUser(username, hashed, name, email)
     //토큰 발행
     const token = await createJwtToken(users.id)
