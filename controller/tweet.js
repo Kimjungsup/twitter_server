@@ -1,6 +1,6 @@
 // 함수 역할 하는 것들은 여기에 다 모아두기
 import * as tweetRepository from '../data/tweet.js'
-
+import { getSocketIo } from '../connection/socket.js'
 
 // 모든 트윗을 가져오는 함수
 export async function getTweets(req, res, next){
@@ -21,11 +21,12 @@ export async function getTweet(req, res, next){
     }
 }
 
-// 트윗을 생성하는 함수
+// 트윗을 생성하는 함수 
 export async function createTweet(req, res, next) {
     const { username, name, text } = req.body
     const tweet = await tweetRepository.create(username, name, text)
-    res.status(201).json(tweet)    
+    res.status(201).json(tweet)
+    getSocketIo().emit('tweets', tweet)
 }
 
 
