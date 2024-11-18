@@ -3,12 +3,6 @@ import * as bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { config } from '../config.js'
 
-// config 만들어서 필요없어짐 (지우기) // 시크릿 키 + 상수 + 만료일  
-// const secretkey = 'abcdefg1234%^&*' // 코드에 관리하면 안됨
-// const bcryptSaltRounds = 10
-// const jwtExpiresIndays = '2d'
-
-// 토큰 만들어내는 함수
 async function createJwtToken(id) {
     return jwt.sign(
         {id}, config.jwt.secretKey, {expiresIn: config.jwt.expiresInSec})
@@ -16,7 +10,7 @@ async function createJwtToken(id) {
 
 // signup
 export async function signup(req, res, next) {
-    const { username, password, name, email } = req.body
+    const { username, password, name, email, url } = req.body
     // 회원 있는 지 중복체크
     const found = await authRepository.findByUsername(username) 
     if(found){
@@ -24,15 +18,21 @@ export async function signup(req, res, next) {
     }
 
     // const users = await authRepository.createUser(username, password, name, email)
-    const hashed = bcrypt.hashSync(password, config.bcrypt.saltRounds)  // bcryptSaltRounds 보안상 따로 뺌 10값
-    const users = await authRepository.createUser(username, hashed, name, email)
+    const hashed = bcrypt.hashSync(password, config.bcrypt.saltRounds)
+    const users = await authRepository.createUser({
+        username, 
+        password: hashed,  // password로 감싸서 보내야 함 
+        name, 
+        email, 
+        url})   // url 추가 - { } 감싸야 함, 
+   
     //토큰 발행
     const token = await createJwtToken(users.id)
-    res.status(201).json({token,users})   
+    res.status(201).json({token, username})   
 }
 
 
-// login   안됨
+// login
 export async function login(req, res, next) {
     const { username, password } = req.body
     const user = await authRepository.findByUsername(username)

@@ -2,11 +2,11 @@
 import * as tweetRepository from '../data/tweet.js'
 import { getSocketIo } from '../connection/socket.js'
 
+
 // 모든 트윗을 가져오는 함수
 export async function getTweets(req, res, next){
     const username = req.query.username
-    const data = await(username ? tweetRepository.getAllByUsername(username) : 
-    tweetRepository.getAll())
+    const data = await(username ? tweetRepository.getAllByUsername(username) : tweetRepository.getAll())
     res.status(200).json(data)
 }
  
@@ -23,8 +23,8 @@ export async function getTweet(req, res, next){
 
 // 트윗을 생성하는 함수 
 export async function createTweet(req, res, next) {
-    const { username, name, text } = req.body
-    const tweet = await tweetRepository.create(username, name, text)
+    const { text } = req.body  // 로그인이 되어 토큰이 있는 상황이라 text만 받아오면 됨
+    const tweet = await tweetRepository.create(text, req.userId)
     res.status(201).json(tweet)
     getSocketIo().emit('tweets', tweet)
 }

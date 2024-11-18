@@ -19,7 +19,6 @@ const validateTweet = [
   // 여기 통과값이 미들웨어 밸리데이터.js > validate() 함수 error 값으로 들어감
 
 
-
 // 1. 해당 아이디에 대한 트윗 가져오기 (어떤 아이디가 썼는지 모아보기 - 검색 )
 // GET 방식으로 가져올 것
 // http://127.0.0.1:8080/tweets?username=:username
@@ -46,41 +45,9 @@ router.post('/', validateTweet, isAuth, tweetController.createTweet)   // 유효
 router.put('/:id', validateTweet, isAuth, tweetController.updateTweet)
 
 
-// 지피티형 (트위 수정 파트)
-//router.put('/:id', (req, res, next) => {
-//     const id = req.params.id; // URL 경로에서 id 추출
-//     const text = req.body; // 요청 본문에서 수정할 트윗 내용 추출
-
-//     // ID에 해당하는 트윗 찾기
-//     const tweet = tweets.find((tweet) => tweet.id === id);
-
-//     if (tweet) {
-//         // 트윗 내용 업데이트
-//         tweet.text = text || tweet.text; // 새 text가 없으면 기존 text 유지
-
-//         res.status(201).json({
-//             message: `트윗 ${id}이 수정되었습니다.`,
-//             updatedTweet: tweet,
-//         });
-//     } else {
-//         res.status(404).json({
-//             message: `${id}에 해당하는 트윗이 없습니다.`,
-//         });
-//     }
-// });
-
-
-
 // 5. 트윗 삭제하기
 // DELETE
 // http://127.0.0.1:8080/tweets/:id
 router.delete('/:id', isAuth, tweetController.deleteTweet)
 
 export default router  
-
-
-
-
-// npm i express-validator 
-// 회원 가입할 때 엉망인 데이터를 넣으면 혹은 서버로 직접 데이터 보내버리면 프론트에서 체크는 의미가 없음
-// 서버 쪽에서도 validate 해야 되서 까는 미들 웨어
