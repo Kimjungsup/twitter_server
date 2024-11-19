@@ -1,14 +1,20 @@
 import { config } from '../config.js'
-import MongoDb from 'mongodb'
+import Mongoose from 'mongoose'
 
 
 let db
-// 몽고db 클라우드로 연결
+// 몽구스 클라우드로 연결
 export async function connectDB() {
-    return MongoDb.MongoClient.connect(config.db.host).then((client) => {
-        db = client.db()
+    return Mongoose.connect(config.db.host)
+}  
+
+export function useVirtualId(schema) {
+    schema.virtual('id').get(function () {
+        return this._id.toString()
     })
-}  //export 했으니깐 app.js에서 사용 가능 ㄱㄱ
+    schema.set('toJSON', { virtual: true})       // json 이랑 객체 왔다갔다 편하게
+    schema.set('toObject', { virtual: true})
+}
 
 
 // 디비에서 컬렉션 가져오기
